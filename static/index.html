@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset=utf-8><title>LW Stream Cipher</title>
+<style>body{font-family:sans-serif;max-width:850px;margin:2em auto}button{margin:3px;padding:6px 12px}pre{background:#111;color:#0f0;padding:1em;overflow:auto;white-space:pre-wrap;word-break:break-all}</style></head><body>
+<h2>Lightweight Stream Cipher - Smart City IoT</h2>
+<div><button onclick="send('traffic')">Traffic</button><button onclick="send('environment')">Environment</button><button onclick="send('lighting')">Street light</button><button onclick="send('parking')">Parking</button><button onclick="send('traffic',true)">Send TAMPERED</button></div>
+<div><button onclick="show('/api/security')">Security analysis</button><button onclick="show('/api/benchmark?size=1024')">Benchmark</button><button onclick="show('/api/records')">Server records</button></div>
+<pre id=o>Ready.</pre>
+<script>
+const o=document.getElementById('o');
+async function show(u){o.textContent='Working...';o.textContent=JSON.stringify(await (await fetch(u)).json(),null,2)}
+async function send(k,bad){let s=await (await fetch('/api/simulate/'+k)).json();let b=s.packet_b64;
+ if(bad){let a=atob(b).split('');a[9]=String.fromCharCode(a[9].charCodeAt(0)^1);b=btoa(a.join(''))}
+ let r=await fetch('/api/ingest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({packet_b64:b})});
+ o.textContent='DEVICE plaintext:\n'+s.plaintext+'\n\nENCRYPTED packet (hex):\n'+s.packet_hex+'\n\nSERVER response ('+r.status+'):\n'+JSON.stringify(await r.json(),null,2)}
+</script></body></html>
