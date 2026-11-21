@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: securecity-cipher
+    runtime: docker
+    envVars:
+      - key: CIPHER_KEY_HEX
+        value: 00112233445566778899
