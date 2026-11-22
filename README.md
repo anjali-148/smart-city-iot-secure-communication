@@ -1,4 +1,4 @@
-# SecureCity — Lightweight Stream Cipher for Smart City IoT
+# SecureCity —- Lightweight Stream Cipher for Smart City IoT
 
 A software-only demonstration of encrypted Smart City IoT communication using an educational LFSR/NLFSR-based stream cipher.
 
